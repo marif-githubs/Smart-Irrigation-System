@@ -1,4 +1,4 @@
-# smart-watering-system-mini-project-.
+# smart-irrigation-system-mini-project-.
 it is a project which i had made for my college mini project in third year.
 the hole project is divided into three parts,
 there are. 1. web page interface.
