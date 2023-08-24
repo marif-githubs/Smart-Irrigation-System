@@ -119,7 +119,7 @@ unsigned long minutesToMilliseconds(int minutes) {
     flag = false;
     day = weekday;
   }
-
+  if(!flag) {
     if (onHour >= 0) {
       if (time >= onHour && minute >= onMinute) {
         switch_on();
@@ -128,6 +128,7 @@ unsigned long minutesToMilliseconds(int minutes) {
         flag = true;
       }
     }
+  }
 }
 
 void wifi_Set() {
@@ -183,8 +184,8 @@ void setup() {
 
 void loop() {
   server.handleClient();
-  if(!flag){
-    schedule();
-  }
+  
+  schedule();
+  
 
 }
