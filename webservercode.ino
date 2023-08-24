@@ -6,6 +6,7 @@
 #include <string.h>
 #include <DHT.h>
 #include <dummy.h>
+#include <EEPROM>
 
 const char* ssid = "d link*";
 const char* password = "9391039251";
@@ -85,7 +86,14 @@ void handleFormSubmit() {
   onMinute = S_minute.toInt();
   Interval = S_interval.toInt();
   flag = false;
+  int addr = 0;
+
   // Do something with the data (e.g., store in EEPROM, send a response)
+  EEPROM.put(addr,onHour);
+  addr += sizeof(onHour);
+  EEPROM.put(addr,onMinute);
+  addr += sizeof(onMinute);
+  EEPROM.put(addr,Interval);
 
   server.send(200, "text/plain", "Data received");
 }
@@ -100,13 +108,19 @@ unsigned long minutesToMilliseconds(int minutes) {
   int time = timeinfo->tm_hour;
   int minute = timeinfo->tm_min;
   int weekday = timeinfo->tm_wday;
+  int addr = 0;
+  EEPROM.get(addr, onHour);
+  addr += sizeof(onHour);
+  EEPROM.get(addr, onMinute);
+  addr += sizeof(onMinute);
+  EEPROM.get(addr, Interval);
 
   if(weekday =! day){
     flag = false;
     day = weekday;
   }
 
-    if (onHour > 0) {
+    if (onHour >= 0) {
       if (time >= onHour && minute >= onMinute) {
         switch_on();
         delay(minutesToMilliseconds(Interval));
