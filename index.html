@@ -31,7 +31,6 @@
         h1 {
             font-size: 2em;
             text-align: center;
-
         }
 
         .section2 {
@@ -65,10 +64,10 @@
             border: groove rgb(76, 207, 251) 3px;
             font-size: 1.14em;
             cursor: pointer;
-            right:50px;
+            right: 50px;
             border-radius: 100%;
         }
-        
+
         .box {
             display: none;
             position: fixed;
@@ -109,7 +108,6 @@
         }
 
         th p {
-            background-color: aliceblue;
             margin-left: 35%;
             margin-right: 35%;
             font-size: 1.2em;
@@ -127,7 +125,6 @@
             margin-left: 30px;
             padding-bottom: 20px;
         }
-
     </style>
     <script>
 
@@ -139,7 +136,6 @@
             document.getElementById("over").style.display = "none";
             document.getElementById("con").style.display = "none"
         }
-/*---------------------------------------------------------------------------------------------------------------------------*/    
         var xhr1 = new XMLHttpRequest();
         function sendData() {
             var form = document.getElementById("sch_form");
@@ -151,13 +147,33 @@
 
         function manual() {
             var form_interval = document.getElementById("sch_form").elements[2].value;
-            if (form_interval == 0){
+            if (form_interval == 0) {
                 document.getElementById("button").textContent = "M";
-            }else{
+            } else {
                 document.getElementById("button").innerHTML = "A";
             }
         }
-/*---------------------------------------------------------------------------------------------------------------------------*/
+
+        function scheduleLoader() {
+            fetch('/S_loader')
+                .then(response => response.json())
+                .then(data => {
+                    var onHour = data.onHour;
+                    var onMinute = data.onMinute;
+                    var Interval = data.Interval;
+
+                    var inputElement1 = document.getElementById("hour");
+                    var inputElement2 = document.getElementById("minute");
+                    var inputElement3 = document.getElementById("interval");
+
+                    inputElement1.value = onHour;
+                    inputElement2.value = onMinute;
+                    inputElement3.value = Interval;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
 
         var formattedDateTime;
         var formattedTime;
@@ -226,18 +242,15 @@
                 });
         }
 
-
         document.addEventListener('DOMContentLoaded', () => {
             fetchData();
+            scheduleLoader();
+            manual();
         });
 
         setInterval(displayDateTime, 1000);
 
         setInterval(fetchData, 1000);
-
-
-        
-        
     </script>
 
     <title>Smart Watering System</title>
@@ -254,22 +267,20 @@
                 <p class="status-text" id="status_text">Watering is OFF</p>
             </div>
             <button class="but" id="button" onclick="fun1()">M</button>
-<!----------------------------------------------------------------------------------------------------------------------------->
             <div class="overlay" id="over"></div>
             <div class="box" id="con">
                 <h2>Schedule</h2>
                 <form action="" id="sch_form">
                     <label for="hour">Hour:   </label>
-                    <input type="text" id="hour" name="S_hour" placeholder="'hh'"/><br><br>
+                    <input type="text" id="hour" name="S_hour" placeholder="'hh'" /><br><br>
                     <label for="minute">Minutes:</label>
-                    <input type="text" id="minute" name="S_minute" placeholder="'mm'"/><br><br>
+                    <input type="text" id="minute" name="S_minute" placeholder="'mm'" /><br><br>
                     <label for="interval">Interval:</label>
-                    <input type="text" id="interval" name="S_interval" placeholder="'mm'"/><br><br>
+                    <input type="text" id="interval" name="S_interval" placeholder="'mm'" /><br><br>
                 </form>
                 <input type="button" id="submitButton" value="save" onclick="fun2(); sendData(); manual();">
                 <input type="button" id="closeButton" value="close" onclick="fun2()">
             </div>
-<!----------------------------------------------------------------------------------------------------------------------------->
         </section>
         <section class="section3">
             <div class="container">
@@ -278,7 +289,7 @@
                         <th>
                             <div class="g1">
                                 <h2>Temperature</h2>
-                                <P class="temperature" id   ="temperature_">-</P>
+                                <P class="temperature" id="temperature_">-</P>
                             </div>
                         </th>
                         <th>
@@ -304,7 +315,8 @@
                     </tr>
                 </table>
             </div>
-            <h3>LAST WATER OR RAIN ON <span class="last-rain" id="last_rain">-</span>
+            <h3>
+                LAST WATER OR RAIN ON <span class="last-rain" id="last_rain">-</span>
             </h3>
     </div>
     </section>
