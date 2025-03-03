@@ -25,7 +25,7 @@ Stores watering schedules in EEPROM to retain settings across power cycles.
 Web-based Control Panel:
 
 View sensor readings and control the system remotely using a web browser.
-
+view web dashboard https://marif-githubs.github.io/Smart-Watering-System/
 
 Components Used
 ESP8266 WiFi module
