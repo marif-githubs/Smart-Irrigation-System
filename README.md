@@ -1,4 +1,4 @@
-Smart Watering System using ESP8266
+Smart Irrigation System using ESP8266
 
 Overview
 This project implements a Smart Watering System using an ESP8266 microcontroller, DHT11 sensor, soil moisture sensor, and rain sensor. It provides an interactive web interface to monitor environmental conditions and control watering schedules remotely.
